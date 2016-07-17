@@ -32,10 +32,10 @@ def find_config(config_path):
     """
     possible_locations = [
         config_path,
-        os.path.join(CONF.state_path, "etc", "cinder", config_path),
-        os.path.join(CONF.state_path, "etc", config_path),
-        os.path.join(CONF.state_path, config_path),
-        "/etc/cinder/%s" % config_path,
+        #os.path.join(CONF.state_path, "etc", "cinder", config_path),
+        #os.path.join(CONF.state_path, "etc", config_path),
+        #os.path.join(CONF.state_path, config_path),
+        #"/etc/cinder/%s" % config_path,
     ]
 
     for path in possible_locations:
@@ -62,6 +62,7 @@ class Loader(object):
 
         """
         config_path = config_path or CONF.api_paste_config
+        #config_path = './api-paste.ini'
         self.config_path = find_config(config_path)
 
     def load_app(self, name): # name = 'osapi_volume'
@@ -91,7 +92,7 @@ class WSGIService(service.ServiceBase):
         """
         self.name = name
         self.manager = self._get_manager()
-        self.loader = loader or Loader()
+        self.loader = loader or Loader('./api-paste.ini')
         self.app = self.loader.load_app(name)   # name = osapi_volume
         self.host = getattr(CONF, '%s_listen' % name, "0.0.0.0")
         self.port = getattr(CONF, '%s_listen_port' % name, 8080)

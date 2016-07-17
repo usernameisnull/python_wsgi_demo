@@ -42,7 +42,8 @@ class APIRouter(Router):
             mapper = routes.Mapper()
 
         tmp_resource = app_tmp.create_resource()  # create resource
-        mapper.connect("/", controller=tmp_resource,  # create map
-                       action="index",
-                       conditions={'method': ['GET']})
+        #mapper.connect("/", controller=tmp_resource,  # create map
+        #               action="index",
+        #               conditions={'method': ['GET']})
+        mapper.resource('v', 'version', controller=tmp_resource, collection={'aa': 'GET'})
         super(APIRouter, self).__init__(mapper)

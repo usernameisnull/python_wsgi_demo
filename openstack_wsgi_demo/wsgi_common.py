@@ -292,3 +292,17 @@ class Loader(object):
             LOG.exception(("Error loading app %s"), name)
             # raise exception.PasteAppNotFound(name=name, path=self.config_path)
             raise Exception
+
+def action(name):
+    """Mark a function as an action.
+
+    The given name will be taken as the action key in the body.
+
+    This is also overloaded to allow extensions to provide
+    non-extending definitions of create and delete operations.
+    """
+
+    def decorator(func):
+        func.wsgi_action = name
+        return func
+    return decorator
